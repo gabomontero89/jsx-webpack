@@ -8,4 +8,16 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: path.resolve(__dirname, 'dist'),
   },
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
+  module: {
+    rule: [
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/,
+      }
+    ],
+  }
 };
