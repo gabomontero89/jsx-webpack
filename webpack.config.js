@@ -7,9 +7,10 @@ module.exports = {
   entry: './src/index.js',
 
   output: {
-    path: '',
+    path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
-    publicPath: path.resolve(__dirname, 'dist'),
+    chunkFilename: '[id].js',
+    publicPath: '',
   },
 
   resolve: {
@@ -18,14 +19,14 @@ module.exports = {
 
   module: {
 
-    rule: [
+    rules: [
       {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
       },
       {
-        text: /\.css$/,
+        test: /\.css$/,
         exclude: /node_modules/,
         use: [
           { loader: 'style-loader' },
@@ -33,8 +34,9 @@ module.exports = {
             loader: 'css-loader',
             options: {
               importLoaders: 1,
-              modules: true,
-              localIdentName: '[name]__[local]__[hash:base64:5]',
+              modules: {
+                localIdentName: '[name]__[local]__[hash:base64:5]',
+              },
             },
           },
           {
@@ -42,12 +44,7 @@ module.exports = {
             options: {
               ident: 'postcss',
               plugins: () => [
-                autoprefixer({
-                  browsers: [
-                    '> 1%',
-                    'last 2 versions',
-                  ],
-                })
+                autoprefixer(),
               ],
             }
           }
